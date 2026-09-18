@@ -1,0 +1,15 @@
+[project]
+name = "voicistant"
+version = "0.1.0"
+description = "Self-hosted voice AI chatbot"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.8",
+]
+
+[tool.ruff]
+line-length = 100
