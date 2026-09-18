@@ -15,4 +15,5 @@ jobs:
       - run: uv run ruff format --check
       - run: uv run pytest
       - run: uv run gpu/bench.py --selftest
+      - run: cp .env.example .env && SITE_ADDRESS=ci.example SEARXNG_SECRET=ci docker compose -f deploy/docker-compose.yml config -q
       - run: find . -name '*.sh' -not -path './.venv/*' -exec shellcheck {} +

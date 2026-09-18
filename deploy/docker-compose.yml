@@ -1,0 +1,35 @@
+# VPS stack. Run from this directory with the repo's .env: see deploy.sh.
+services:
+  app:
+    image: ghcr.io/maverick0395/voicistant-app:${IMAGE_TAG:-latest}
+    network_mode: host # aiortc advertises host addresses for WebRTC (SPEC §3.7)
+    env_file: ../.env
+    volumes:
+      - app-data:/data
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2.11.4-alpine
+    network_mode: host # binds 80/443, proxies to the app on 127.0.0.1:8080
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?set SITE_ADDRESS in .env, e.g. 65-21-10-42.sslip.io}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    restart: unless-stopped
+
+  searxng:
+    image: searxng/searxng:2026.9.18-63b827edc
+    ports:
+      - 127.0.0.1:8888:8080 # web_search tool only, never public
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:?set SEARXNG_SECRET in .env}
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+    restart: unless-stopped
+
+volumes:
+  app-data:
+  caddy-data:
+  caddy-config:

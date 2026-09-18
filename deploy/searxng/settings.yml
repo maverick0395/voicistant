@@ -1,0 +1,10 @@
+# Only overrides; everything else comes from SearXNG defaults. Engines are picked in phase G
+# by testing from the VPS IP (SPEC §3.4). server.secret_key comes from SEARXNG_SECRET.
+use_default_settings: true
+
+server:
+  limiter: false # reachable from localhost only
+  image_proxy: false
+
+search:
+  formats: [html, json] # the web_search tool needs JSON (off by default: 403)
