@@ -15,4 +15,5 @@ jobs:
       - run: uv run ruff format --check
       # exit code 5 = no tests collected yet; drop the fallback once tests exist
       - run: uv run pytest || [ $? -eq 5 ]
+      - run: uv run gpu/bench.py --selftest
       - run: find . -name '*.sh' -not -path './.venv/*' -exec shellcheck {} +
