@@ -3,7 +3,9 @@ name = "voicistant"
 version = "0.1.0"
 description = "Self-hosted voice AI chatbot"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "argon2-cffi>=25.1.0",
+]
 
 [dependency-groups]
 dev = [
@@ -13,3 +15,6 @@ dev = [
 
 [tool.ruff]
 line-length = 100
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

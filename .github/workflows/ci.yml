@@ -13,7 +13,6 @@ jobs:
       - run: uv sync --frozen
       - run: uv run ruff check
       - run: uv run ruff format --check
-      # exit code 5 = no tests collected yet; drop the fallback once tests exist
-      - run: uv run pytest || [ $? -eq 5 ]
+      - run: uv run pytest
       - run: uv run gpu/bench.py --selftest
       - run: find . -name '*.sh' -not -path './.venv/*' -exec shellcheck {} +
